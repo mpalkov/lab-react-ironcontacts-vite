@@ -1,5 +1,6 @@
 import "./App.css";
 import dataBase from "./contacts.json";
+import { useState } from "react";
 
 const getFirstNContacts = (array, n) => {
   const nContactsList = [];
@@ -10,11 +11,31 @@ const getFirstNContacts = (array, n) => {
 };
 
 function App() {
-  const contactList = getFirstNContacts(dataBase, 5);
+  const contacts = getFirstNContacts(dataBase, 5);
+  const [contactList, setContacts] = useState(contacts);
+
+  const addRandomContact = (list) => {
+    const remainingContacts = dataBase.filter((element) => {
+      for(let i = 0; i < list.length; i++) {
+        if (element.id === list[i].id) {
+          return false;
+        }
+      }
+      return true;
+    });
+    // console.log("cleanlist",dataBase.length, remainingContacts.length);
+    const randomNumber = Math.round(Math.random() * remainingContacts.length);
+    //console.log(randomNumber);
+    const newList = [...list];
+    newList.push(remainingContacts[randomNumber]);
+    setContacts(newList);
+  };
+
   console.log("app is mounted");
   return (
     <div className="App">
-      <h1>LAB | React IronContacts</h1>
+      <h1>Iron-Contacts</h1>
+      <button onClick={()=> addRandomContact(contactList)}>Add Random Contact</button>
       <table>
         <tbody>
         <tr>
