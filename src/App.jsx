@@ -31,11 +31,25 @@ function App() {
     setContacts(newList);
   };
 
+  const sortByName = (list) => {
+    const newList = [...list];
+    newList.sort((a, b) => a.name.localeCompare(b.name));
+    setContacts(newList);
+  };
+
+  const sortByPopularity = (list) => {
+    const newList = [...list];
+    newList.sort((a, b) => (b.popularity - a.popularity));
+    setContacts(newList);
+  };
+
   console.log("app is mounted");
   return (
     <div className="App">
       <h1>Iron-Contacts</h1>
       <button onClick={()=> addRandomContact(contactList)}>Add Random Contact</button>
+      <button onClick={()=> sortByName(contactList)}>Sort by Name</button>
+      <button onClick={()=> sortByPopularity(contactList)}>Sort by Popularity</button>
       <table>
         <tbody>
         <tr>
