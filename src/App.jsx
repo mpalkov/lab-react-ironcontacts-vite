@@ -14,10 +14,10 @@ function App() {
   const contacts = getFirstNContacts(dataBase, 5);
   const [contactList, setContacts] = useState(contacts);
 
-  const addRandomContact = (list) => {
+  const addRandomContact = () => {
     const remainingContacts = dataBase.filter((element) => {
-      for(let i = 0; i < list.length; i++) {
-        if (element.id === list[i].id) {
+      for(let i = 0; i < contactList.length; i++) {
+        if (element.id === contactList[i].id) {
           return false;
         }
       }
@@ -26,30 +26,35 @@ function App() {
     // console.log("cleanlist",dataBase.length, remainingContacts.length);
     const randomNumber = Math.round(Math.random() * remainingContacts.length);
     //console.log(randomNumber);
-    const newList = [...list];
+    const newList = [...contactList];
     newList.push(remainingContacts[randomNumber]);
     setContacts(newList);
   };
 
-  const sortByName = (list) => {
-    const newList = [...list];
+  const sortByName = () => {
+    const newList = [...contactList];
     newList.sort((a, b) => a.name.localeCompare(b.name));
     setContacts(newList);
   };
 
-  const sortByPopularity = (list) => {
-    const newList = [...list];
+  const sortByPopularity = () => {
+    const newList = [...contactList];
     newList.sort((a, b) => (b.popularity - a.popularity));
     setContacts(newList);
   };
+
+  const deleteContact = (id) => {
+    const newList = contactList.filter((contact) => contact.id !== id);
+    setContacts(newList);
+  }
 
   console.log("app is mounted");
   return (
     <div className="App">
       <h1>Iron-Contacts</h1>
-      <button onClick={()=> addRandomContact(contactList)}>Add Random Contact</button>
-      <button onClick={()=> sortByName(contactList)}>Sort by Name</button>
-      <button onClick={()=> sortByPopularity(contactList)}>Sort by Popularity</button>
+      <button onClick={()=> addRandomContact()}>Add Random Contact</button>
+      <button onClick={()=> sortByName()}>Sort by Name</button>
+      <button onClick={()=> sortByPopularity()}>Sort by Popularity</button>
       <table>
         <tbody>
         <tr>
@@ -58,6 +63,7 @@ function App() {
           <th>Popularity</th>
           <th>Won an Oscar</th>
           <th>Won an Emmy</th>
+          <th>Action</th>
         </tr>
         {
           contactList.map((element) => {
@@ -69,6 +75,9 @@ function App() {
                 <td>{popularity}</td>
                 <td>{wonOscar && "🏆"}</td>
                 <td>{wonEmmy && "🌟"}</td>
+                <td><button onClick={() => {
+                  deleteContact(id);
+                }}>Delete</button></td>
               </tr>
             )
           })
