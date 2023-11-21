@@ -1,6 +1,5 @@
 import "./App.css";
 import dataBase from "./contacts.json";
-console.log(dataBase);
 
 const getFirstNContacts = (array, n) => {
   const nContactsList = [];
@@ -22,15 +21,19 @@ function App() {
           <th>Picture</th>
           <th>Name</th>
           <th>Popularity</th>
+          <th>Won an Oscar</th>
+          <th>Won an Emmy</th>
         </tr>
         {
           contactList.map((element) => {
-            const {pictureUrl, name, popularity, id} = element;
+            const {pictureUrl, name, popularity, id, wonOscar, wonEmmy} = element;
             return (
               <tr key={id}>
                 <td><img width="100px" src={pictureUrl} /></td>
                 <td>{name}</td>
                 <td>{popularity}</td>
+                <td>{wonOscar && "🏆"}</td>
+                <td>{wonEmmy && "🌟"}</td>
               </tr>
             )
           })
