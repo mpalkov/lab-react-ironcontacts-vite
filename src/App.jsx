@@ -56,7 +56,7 @@ function App() {
       <button onClick={()=> sortByName()}>Sort by Name</button>
       <button onClick={()=> sortByPopularity()}>Sort by Popularity</button>
       <table>
-        <tbody>
+      <thead>        
         <tr>
           <th>Picture</th>
           <th>Name</th>
@@ -65,9 +65,13 @@ function App() {
           <th>Won an Emmy</th>
           <th>Action</th>
         </tr>
+        </thead>
+        <tbody>
         {
           contactList.map((element) => {
-            const {pictureUrl, name, popularity, id, wonOscar, wonEmmy} = element;
+            const {name, pictureUrl, popularity, id, wonOscar, wonEmmy} = element;
+            console.log(element, element.pictureUrl, pictureUrl);
+            
             return (
               <tr key={id}>
                 <td><img width="100px" src={pictureUrl} /></td>
